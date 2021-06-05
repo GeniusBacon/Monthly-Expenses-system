@@ -9,9 +9,8 @@ class Wallet
 	public:    // should be private and use getters
 	double Income;
 	string  wallet_Name;
-
-
+	
 public:
-	void Initialize_Wallet(string , double );
+	Wallet(string, double);
 };
 

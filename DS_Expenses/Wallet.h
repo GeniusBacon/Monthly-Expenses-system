@@ -3,11 +3,12 @@
 #include <string>
 using namespace std;
 
-struct Date
+
+struct category
 {
-	int Day;
-	int Month;
-	int Year;
+	string cat_name;
+	double spent;
+
 };
 
 
@@ -16,11 +17,13 @@ class Wallet
 {
 public:    // should be private and use getters
 	double Balance;
-	string  wallet_Name;
-
+	string  walletName;
+	double totalspent;
+	category categories[9];
 
 public:
 	Wallet(string, double);
-	double Addexpense();
+	void Addexpense();
 	void editWallet();
+	void viewWallet();
 };

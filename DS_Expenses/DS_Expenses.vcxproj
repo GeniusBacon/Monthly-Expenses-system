@@ -145,6 +145,9 @@
   <ItemGroup>
     <ClInclude Include="Wallet.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Objects_saver.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

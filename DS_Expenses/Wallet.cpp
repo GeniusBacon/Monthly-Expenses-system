@@ -3,47 +3,58 @@
 #include <iostream>
 using namespace std;
 
-struct category
+/*struct category
 {
     string cat_name;
     double spent;
 
-}categories[] = { {"Food", 0} , {"Education", 0} , {"Transportation", 0} ,
-    {"Clothes", 0} , {"Health", 0} , {"Family", 0} , {"Debts", 0}, {"Bills", 0} , {"Others", 0} };
+};*/
+
+struct Day
+{
+    double daySpent, spentCat[9] = {};
+
+
+}viewDay[12][31];
 
 
 
 Wallet::Wallet(string name, double income)
 {
-    wallet_Name = name;
+    walletName = name;
     Balance = income;
+    totalspent = 0;
+    category categories2[9] = { {"Food", 0}, { "Education", 0 }, { "Transportation", 0 },
+        { "Clothes", 0 }, { "Health", 0 }, { "Family", 0 }, { "Debts", 0 }, { "Bills", 0 }, { "Others", 0 } };
+    copy(categories2, categories2 + 9, categories);
 }
 
-double Wallet::Addexpense()
+
+void Wallet::Addexpense()
 {
     int categChoice;
     double spent;
-    Date date;
     cout << "How much did you spend? " << endl;
     cin >> spent;
+    totalspent += spent;
     if (spent <= Balance)
     {
         Balance -= spent;
         cout << "Choose the category in which you spent your money: " << endl;
         for (int i = 0; i < 9; i++)
-        {
             cout << i + 1 << ". " << categories[i].cat_name << endl;
-
-        }
         cin >> categChoice;
         // date
-        categories[categChoice - 1].spent += spent;
+        categories[--categChoice].spent += spent;
 
-        return Balance;
+        cout << "Your current balance: " << Balance << endl;
+        return ;
     }
-    else
+    else if(spent>Balance)
         cout << "Not enough balance. " << endl;
     system("CLS");
+   
+    return ;
 }
 
 void Wallet::editWallet()
@@ -58,7 +69,7 @@ void Wallet::editWallet()
         cout << "\n Enter the new name: ";
         string name;
         cin >> name;
-        wallet_Name = name;
+        walletName = name;
         cout << "Editing done successfully.\n";
     }
     else if (choice == 2)
@@ -71,4 +82,29 @@ void Wallet::editWallet()
     else cout << "\nInvalid choice number\n\n";
     system("CLS");
 
+}
+
+void Wallet::viewWallet()
+{
+    cout << "The total spent money is :" << totalspent<< "\nChoose how you want to filter your expenses:\n";
+    cout << "1-Filter by date.\n2-Filter by category.\n3-Filter by amount of money.\n";
+    // more than one filter.
+    int choice, categChoice;
+    cin >> choice;
+    if (choice == 1)
+    {
+        // filter by date
+    }
+    else if (choice == 2)
+    {
+        cout << "Choose the category by which you want to filter your expenses: " << endl;
+        for (int i = 0; i < 9; i++)
+            cout << i + 1 << ". " << categories[i].cat_name << endl;
+        cin >> categChoice;
+        cout << "You have spent " << categories[--categChoice].spent << " on " << categories[categChoice].cat_name << endl;
+    }
+    else if (choice == 3)
+    {
+        // filter by amount
+    }
 }

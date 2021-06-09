@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stdio.h>
 #include "Wallet.h"
 
 using namespace std;
@@ -81,7 +82,9 @@ void createWallet()
 {
     string name;
     double income;
-    cout << "Please Enter Your Wallet Name: ";  cin >> name;
+    cout << "Please Enter Your Wallet Name: ";
+    cin.ignore();
+    getline(cin, name);
     cout << "Please Enter Your income: ";  cin >> income;
     Wallet* tmp = new Wallet(name, income);
     wallets.push_back(*tmp);

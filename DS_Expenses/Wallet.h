@@ -9,7 +9,6 @@ struct category
 {
 	string cat_name;
 	double spent;
-
 };
 
 
@@ -20,11 +19,15 @@ public:    // should be private and use getters
 	double Balance;
 	string  walletName;
 	double totalspent;
-	category categories[9];
+	category categories[9];		
 
 public:
 	Wallet(string, double);
-	void Addexpense();
+	void displayWalletMenu();
+	void addExpense();
 	void editWallet();
 	void viewWallet();
+	void FilterByDate();
+	void FilterByCat();
+	void FilterByAmount();
 };

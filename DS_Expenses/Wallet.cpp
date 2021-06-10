@@ -10,11 +10,6 @@ struct Date
     int Month;
 };
 
-struct Day
-{
-    double daySpent, spentCat[9] = {};
-}viewDay[12][31];
-
 
 
 Wallet::Wallet(string name, double income)  
@@ -69,10 +64,8 @@ void Wallet::addExpense()
     double spent;
     cin >> spent;
     cout << endl;
-    totalspent += spent;        // update the wallet total spending.
     if (spent <= Balance)
     {
-        Balance -= spent;
         cout << "Choose the category in which you spent your money, or 0 to go back & cancel expense.\nThe existing categories: \n\n";
         for (int i = 0; i < 9; i++)
             cout << i + 1 << ". " << categories[i].cat_name << endl;
@@ -105,6 +98,8 @@ void Wallet::addExpense()
                 cout << "Wrong Day Input\n";
             return;
         }
+        totalspent += spent;        // update the wallet total spending.
+        Balance -= spent;
         viewDay[date.Month-1][date.Day-1].daySpent+=spent;
         viewDay[date.Month - 1][date.Day - 1].spentCat[categChoice] += spent;
         categories[--categChoice].spent += spent;

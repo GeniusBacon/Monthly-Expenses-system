@@ -1,4 +1,5 @@
 #include "Wallet.h"
+#include <string>
 #include <iostream>
 
 using namespace std;
@@ -224,3 +225,57 @@ void Wallet::FilterByAmount()
 
 }
 
+string Wallet::getName()
+{
+    return walletName;
+}
+/*double Wallet::getBalance()
+{
+    return Balance;
+}
+double Wallet::getTotalspent()
+{
+    return totalspent;
+}
+string Wallet::getCatName(int c)
+{
+    return categories[c].cat_name;
+}
+double Wallet::getCatspent(int c)
+{
+    return categories[c].spent;
+}
+double Wallet::getDayspent(int m, int d)
+{
+    return viewDay[m][d].daySpent;
+}
+double Wallet::getDayCatspent(int m, int d, int c)
+{
+    return viewDay[m][d].spentCat[c];
+}
+
+
+void Wallet::setBalance(double par)
+{
+    Balance = par;
+}
+void Wallet::setName(string par)
+{
+    walletName = par;
+}
+void Wallet::setTotalspent(double par)
+{
+    totalspent = par;
+}
+void Wallet::setCatspent(int c, double par)
+{
+    categories[c].spent = par;
+}
+void Wallet::setDayspent(int m, int d, double par)
+{
+    viewDay[m][d].daySpent = par;
+}
+void Wallet::setDayCatspent(int m, int d, int c, double par)
+{
+    viewDay[m][d].spentCat[c] = par;
+}*/

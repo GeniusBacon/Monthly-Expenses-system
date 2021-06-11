@@ -85,7 +85,7 @@ int callWallet()        // takes wallet choice from user.
     }
     cout << "Please choose the number of the wallet you want, or 0 to go back. \nThese are the existing wallets: \n\n";
     for (int index = 0; index < wallets.size(); index++)
-        cout << index + 1 << ". " << wallets[index].walletName << endl;
+        cout << index + 1 << ". " << wallets[index].getName() << endl;
     cout << "\nYour choice: ";
     int Walletchoice;
     cin >> Walletchoice;

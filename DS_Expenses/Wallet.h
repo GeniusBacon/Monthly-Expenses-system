@@ -6,11 +6,6 @@
 
 using namespace std;
 
-struct category
-{
-	string cat_name;
-	double spent;
-};
 
 struct Date
 {
@@ -18,27 +13,26 @@ struct Date
 	int Month;
 };
 
-struct Day
-{
-	double daySpent, spentCat[9] = {};
-};
 
 struct Expense
 {
 	Date date;
-	string cat_name;
+	int cat_id;
+	double amount;
+	string walletName;
 };
 
 class Wallet
 {
 
 private:    // should be private and use getters
+	string categories[9] = {"Food","Education","Transportation","Clothes","Health","Family","Debts","Education","others"};
 	double Balance;
 	string  walletName;
 	double totalspent;
-	category categories[9] = {};
-	Day viewDay[12][31] = {};
-	map<double, vector<Expense>> amountMap;
+	vector<Expense>  Expenses;	// getter .. ?
+	
+	
 
 public:
 	Wallet(string, double);

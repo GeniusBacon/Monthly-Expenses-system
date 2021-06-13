@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int displayMainMenu();
+void displayMainMenu();
 void createWallet();
 void deleteWallet();
 int callWallet();
@@ -22,8 +22,7 @@ int main()
     return 0;
 }
 
-
-int displayMainMenu()
+void displayMainMenu()
 {
     cout << "\nPlease choose what you would like to do: \n\n1- Create a new wallet\n2- Enter a wallet\n3- Delete an existing wallet\n";
     cout << "4- Terminate The Program\n\nPlease enter your choice number: ";
@@ -45,13 +44,17 @@ int displayMainMenu()
     else if (Choice == 3)
         deleteWallet();
     else if (Choice == 4)
-        return cout << "\n\n\t\t\t\t\t\t Goodbye :)  \n \n \n ", 0;
+    {
+        cout << "\n\n\t\t\t\t\t\t Goodbye :)  \n \n \n ";
+        return;
+    }
     else
     {
         cout << "\nInvalid choice number\n\n";
         system("CLS");
     }
         displayMainMenu();      // repeat main menu
+        return;
 }
 
 void createWallet()

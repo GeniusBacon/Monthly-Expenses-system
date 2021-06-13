@@ -10,15 +10,6 @@ Wallet::Wallet(string name, double income)
     walletName = name;
     Balance = income;
     totalspent = 0;
-    categories[0] = { "Food", 0 };
-    categories[1] = { "Education", 0 };         // each category has how much user spent on it
-    categories[2] = { "Transportation", 0 };
-    categories[3] = { "Clothes", 0 };
-    categories[4] = { "Health", 0 };
-    categories[5] = { "Family", 0 };
-    categories[6] = { "Debts", 0 };
-    categories[7] = { "Education", 0 };
-    categories[8] = { "others", 0 };
 }
 
 void Wallet::displayWalletMenu()
@@ -61,7 +52,7 @@ void Wallet::addExpense()
     {
         cout << "Choose the category in which you spent your money, or 0 to go back & cancel expense.\nThe existing categories: \n\n";
         for (int i = 0; i < 9; i++)
-            cout << i + 1 << ". " << categories[i].cat_name << endl;
+            cout << i + 1 << ". " << categories[i] << endl;
         cout << "\nYour choice: ";
         int categChoice;
         cin >> categChoice;
@@ -93,11 +84,7 @@ void Wallet::addExpense()
         }
         totalspent += spent;        // update the wallet total spending.
         Balance -= spent;
-        viewDay[date.Month-1][date.Day-1].daySpent+=spent;
-        viewDay[date.Month - 1][date.Day - 1].spentCat[--categChoice] += spent;
-        categories[categChoice].spent += spent;
-        Expense tmp = {date, categories[categChoice].cat_name};
-        amountMap[spent].push_back(tmp);
+        Expenses.push_back({date, --categChoice, spent, walletName });
         system("CLS");
         cout << "Expense saved successfully.\n\n";
         return;
@@ -195,12 +182,16 @@ void Wallet::FilterByDate()
             cout << "Wrong Day Input\n";
         return;
     }
-    cout << "You have spent " << viewDay[date.Month - 1][date.Day - 1].daySpent << " in " << date.Day << "/" << date.Month;
-    cout << "\n\nHere is a detailed description of your expenses in that day: \n\n";
-    for (int i = 0; i < 9; i++)
-        if (viewDay[date.Month - 1][date.Day - 1].spentCat[i] != 0)
-            cout << "You have spent " << viewDay[date.Month - 1][date.Day - 1].spentCat[i] << " on " << categories[i].cat_name << ".\n";
-    cout << "\n Type anything to continue.\n\n";
+    double total=0;
+    cout << "\nIn " << date.Day << '/' << date.Month << " These are your expenses:\n\n";
+    for (int i = 0; i < Expenses.size(); i++)
+        if (Expenses[i].date.Day == date.Day && Expenses[i].date.Month == date.Month)
+        {
+            total += Expenses[i].amount;
+            cout << "You have spent " << Expenses[i].amount << " on " << categories[Expenses[i].cat_id] << endl;
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
 }
@@ -211,7 +202,7 @@ void Wallet::FilterByCat()
     int categChoice;
     cout << "Choose the category by which you want to filter your expenses, or 0 to go back.\nThe existing categories: \n\n";
     for (int i = 0; i < 9; i++)
-        cout << i + 1 << ". " << categories[i].cat_name << endl;
+        cout << i + 1 << ". " << categories[i] << endl;
     cin >> categChoice;
     cout << endl;
     if (categChoice < 1 || categChoice>9)
@@ -220,8 +211,16 @@ void Wallet::FilterByCat()
             cout << "Invalid category number,returning to main menu...\n";
         return;
     }
-    cout << "You have spent " << categories[--categChoice].spent << " in total on " << categories[categChoice].cat_name << "\n\n";
-    cout << "\n Type anything to continue.\n\n";
+    double total = 0;
+    cout << "\nOn " << categories[--categChoice] << ", These are your expenses:\n\n";
+    for (int i = 0; i < Expenses.size(); i++)
+        if (categChoice == Expenses[i].cat_id)
+        {
+            total += Expenses[i].amount;
+            cout << "You have spent " << Expenses[i].amount  << " in " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << endl;
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
 }
@@ -239,11 +238,17 @@ void Wallet::FilterByAmount()
             cout << "The amount't can't be negative.\n";
         return;
     }
-    if (amountMap[amount].empty() )
-        cout << "There isn't any expenses with that amount.\n";
-    else for (int i = 0; i < amountMap[amount].size(); i++)
-        cout << "You have spent " << amount << " in " << amountMap[amount][i].date.Day << '/' << amountMap[amount][i].date.Month << " on " << amountMap[amount][i].cat_name << ".\n";
-    cout << "\n Type anything to continue.\n\n";
+    cout << "\nWith " << amount << ", These are your expenses:\n\n";
+    double total = 0;
+    for (int i = 0; i < Expenses.size(); i++)
+        if (amount == Expenses[i].amount)
+        {
+            total += amount;
+            cout << "In " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << " and on "
+                << categories[Expenses[i].cat_id] << "\n\n";
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
 }
@@ -273,7 +278,7 @@ void Wallet::FilterByDateAndCategory()
     int categChoice;
     cout << "Choose the category by which you want to filter your expenses, or 0 to go back.\nThe existing categories: \n\n";
     for (int i = 0; i < 9; i++)
-        cout << i + 1 << ". " << categories[i].cat_name << endl;
+        cout << i + 1 << ". " << categories[i] << endl;
     cin >> categChoice;
     cout << endl;
     if (categChoice < 1 || categChoice>9)
@@ -282,21 +287,102 @@ void Wallet::FilterByDateAndCategory()
             cout << "Invalid category number,returning to main menu...\n";
         return;
     }
-    if (viewDay[date.Month - 1][date.Day - 1].spentCat[--categChoice] != 0)
-        cout << "You have spent " << viewDay[date.Month - 1][date.Day - 1].spentCat[categChoice] << " on " << categories[categChoice].cat_name << " in " << date.Day << '/' << date.Month << " .\n";
-    cout << "\n Type anything to continue.\n\n";
+    double total = 0;
+    cout << "\nOn " << categories[--categChoice] << " , In " << date.Day << '/' << date.Month << ", These are your expenses:\n\n";
+    for (int i = 0; i < Expenses.size(); i++)
+        if (categChoice == Expenses[i].cat_id && Expenses[i].date.Day == date.Day && Expenses[i].date.Month == date.Month)
+        {
+            total += Expenses[i].amount;
+            cout << "You have spent " << Expenses[i].amount << endl;
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
 }
 
 void Wallet::FilterByDateAndAmount()
 {
-
+    system("CLS");
+    Date date;
+    cout << "Please enter the month you want to view, or 0 to go back.\nMonth: ";
+    cin >> date.Month;
+    cout << endl;
+    if (date.Month > 12 || date.Month < 1)
+    {
+        if (date.Month != 0)
+            cout << "Wrong Month Input\n";
+        return;
+    }
+    cout << "Please enter the Day you want to view, or 0 to go back.\nDay: ";
+    cin >> date.Day;
+    cout << endl;
+    if ((date.Month == 2 && date.Day > 28) || ((date.Month == 4 || date.Month == 6 || date.Month == 9 || date.Month == 11) && date.Day > 30) || date.Day > 31 || date.Day < 1)
+    {
+        if (date.Day != 0)
+            cout << "Wrong Day Input\n";
+        return;
+    }
+    cout << "Enter the amount of money to filter by, or 0 to go back.\n";
+    double amount;
+    cin >> amount;
+    cout << endl;
+    if (amount <= 0)
+    {
+        if (amount != 0)
+            cout << "The amount can't be negative.\n";
+        return;
+    }
+    double total = 0;
+    cout << "In " << date.Day << '/' << date.Month << " With " << amount << ", These are your expenses:\n\n";
+    for (int i = 0; i < Expenses.size(); i++)
+        if ( Expenses[i].date.Day == date.Day && Expenses[i].date.Month == date.Month && amount == Expenses[i].amount)
+        {
+            total += Expenses[i].amount;
+            cout << "You have spent " << Expenses[i].amount << " on " << categories[Expenses[i].cat_id] << endl;
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
+    string c; cin >> c;
+    return;
 }
 
 void Wallet::FilterByCategoryAndAmount()
 {
-
+    system("CLS");
+    int categChoice;
+    cout << "Choose the category by which you want to filter your expenses, or 0 to go back.\nThe existing categories: \n\n";
+    for (int i = 0; i < 9; i++)
+        cout << i + 1 << ". " << categories[i] << endl;
+    cin >> categChoice;
+    cout << endl;
+    if (categChoice < 1 || categChoice>9)
+    {
+        if (categChoice != 0)
+            cout << "Invalid category number,returning to main menu...\n";
+        return;
+    }
+    cout << "Enter the amount of money to filter by, or 0 to go back.\n";
+    double amount;
+    cin >> amount;
+    cout << endl;
+    if (amount <= 0)
+    {
+        if (amount != 0)
+            cout << "The amount can't be negative.\n";
+        return;
+    }
+    double total = 0;
+    cout << "\nOn " << categories[--categChoice] << ", With " << amount << ", These are your expenses:\n\n";
+    for (int i = 0; i < Expenses.size(); i++)
+        if (categChoice == Expenses[i].cat_id && amount == Expenses[i].amount)
+        {
+            total += Expenses[i].amount;
+            cout << "You have spent " << Expenses[i].amount << "In " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << endl;
+        }
+    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    cout << "\nType anything to continue.\n\n";
+    string c; cin >> c;
 }
 
 string Wallet::getName()

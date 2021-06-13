@@ -5,14 +5,6 @@
 using namespace std;
 
 
-struct Date
-{
-    int Day;
-    int Month;
-};
-
-
-
 Wallet::Wallet(string name, double income)  
 {
     walletName = name;
@@ -102,8 +94,10 @@ void Wallet::addExpense()
         totalspent += spent;        // update the wallet total spending.
         Balance -= spent;
         viewDay[date.Month-1][date.Day-1].daySpent+=spent;
-        viewDay[date.Month - 1][date.Day - 1].spentCat[categChoice] += spent;
-        categories[--categChoice].spent += spent;
+        viewDay[date.Month - 1][date.Day - 1].spentCat[--categChoice] += spent;
+        categories[categChoice].spent += spent;
+        Expense tmp = {date, categories[categChoice].cat_name};
+        amountMap[spent].push_back(tmp);
         system("CLS");
         cout << "Expense saved successfully.\n\n";
         return;
@@ -138,6 +132,12 @@ void Wallet::editWallet()       // function is on repeat until user returns to w
         cout << "\n Enter the new current balance: ";
         int balance;
         cin >> balance;
+        if (balance <= 0)
+        {
+            cout << "Invalid balance is entered.\n";
+            editWallet();
+            return;
+        }
         Balance = balance;
         cout << "Editing done successfully.\n\n";
     }
@@ -149,9 +149,9 @@ void Wallet::editWallet()       // function is on repeat until user returns to w
 void Wallet::viewWallet()       // function is on repeat until user returns to wallet menu. 
 {
     system("CLS");
-    cout << "Your total spent money is: " << totalspent<< "\n\nChoose how you want to filter your expenses:\n\n";
-    cout << "1-Filter by date.\n2-Filter by category.\n3-Filter by amount of money.\n4-Return to Wallet menu.\n";
-    cout << "\nPlease enter your choice number: ";
+    cout << "Your total spent money is: " << totalspent << "\n\nChoose how you want to filter your expenses:\n\n1- Filter by date.\n2- ";
+    cout << "Filter by category.\n3- Filter by amount of money.\n4- Filter by both date and category.\n5- Filter by both date and amount.\n";
+    cout << "6- Filter by both category and amount.\n7- Return to Wallet menu.\n\nPlease enter your choice number: ";
     int choice;
     cin >> choice;
     cout << endl;
@@ -162,7 +162,13 @@ void Wallet::viewWallet()       // function is on repeat until user returns to w
     else if (choice == 3)           
         FilterByAmount();
     // add combined filters .
-    else if (choice == 4) return;
+    else if (choice == 4)
+        FilterByDateAndCategory();
+    else if (choice == 5)
+        FilterByDateAndAmount();
+    else if (choice == 6)
+        FilterByCategoryAndAmount();
+    else if (choice == 7) return;
     else cout << "Invalid choice number\n";
     viewWallet();
 }
@@ -221,6 +227,74 @@ void Wallet::FilterByCat()
 }
 
 void Wallet::FilterByAmount()
+{
+    system("CLS");
+    cout << "Enter the amount of money to filter by, or 0 to go back.\n";
+    double amount;
+    cin >> amount;
+    cout << endl;
+    if (amount <= 0)
+    {
+        if (amount != 0)
+            cout << "The amount't can't be negative.\n";
+        return;
+    }
+    if (amountMap[amount].empty() )
+        cout << "There isn't any expenses with that amount.\n";
+    else for (int i = 0; i < amountMap[amount].size(); i++)
+        cout << "You have spent " << amount << " in " << amountMap[amount][i].date.Day << '/' << amountMap[amount][i].date.Month << " on " << amountMap[amount][i].cat_name << ".\n";
+    cout << "\n Type anything to continue.\n\n";
+    string c; cin >> c;
+    return;
+}
+
+void Wallet::FilterByDateAndCategory()
+{
+    system("CLS");
+    Date date;
+    cout << "Please enter the month you want to view, or 0 to go back.\nMonth: ";
+    cin >> date.Month;
+    cout << endl;
+    if (date.Month > 12 || date.Month < 1)
+    {
+        if (date.Month != 0)
+            cout << "Wrong Month Input\n";
+        return;
+    }
+    cout << "Please enter the Day you want to view, or 0 to go back.\nDay: ";
+    cin >> date.Day;
+    cout << endl;
+    if ((date.Month == 2 && date.Day > 28) || ((date.Month == 4 || date.Month == 6 || date.Month == 9 || date.Month == 11) && date.Day > 30) || date.Day > 31 || date.Day < 1)
+    {
+        if (date.Day != 0)
+            cout << "Wrong Day Input\n";
+        return;
+    }
+    int categChoice;
+    cout << "Choose the category by which you want to filter your expenses, or 0 to go back.\nThe existing categories: \n\n";
+    for (int i = 0; i < 9; i++)
+        cout << i + 1 << ". " << categories[i].cat_name << endl;
+    cin >> categChoice;
+    cout << endl;
+    if (categChoice < 1 || categChoice>9)
+    {
+        if (categChoice != 0)
+            cout << "Invalid category number,returning to main menu...\n";
+        return;
+    }
+    if (viewDay[date.Month - 1][date.Day - 1].spentCat[--categChoice] != 0)
+        cout << "You have spent " << viewDay[date.Month - 1][date.Day - 1].spentCat[categChoice] << " on " << categories[categChoice].cat_name << " in " << date.Day << '/' << date.Month << " .\n";
+    cout << "\n Type anything to continue.\n\n";
+    string c; cin >> c;
+    return;
+}
+
+void Wallet::FilterByDateAndAmount()
+{
+
+}
+
+void Wallet::FilterByCategoryAndAmount()
 {
 
 }

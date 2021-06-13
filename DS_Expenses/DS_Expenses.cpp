@@ -12,6 +12,8 @@ void deleteWallet();
 int callWallet();
 
 vector <Wallet> wallets;
+map<string,bool>nameExists;
+
 
 int main()
 {
@@ -23,7 +25,7 @@ int main()
 
 int displayMainMenu()
 {
-    cout << "\nPlease choose what you would like to do: \n\n1- Create a new wallet\n2- Enter to a wallet\n3- Delete an existing wallet\n";
+    cout << "\nPlease choose what you would like to do: \n\n1- Create a new wallet\n2- Enter a wallet\n3- Delete an existing wallet\n";
     cout << "4- Terminate The Program\n\nPlease enter your choice number: ";
 
     int Choice;
@@ -59,7 +61,19 @@ void createWallet()
     cout << "Please Enter Your Wallet Name: ";
     cin.ignore();
     getline(cin, name);
-    cout << "Please Enter Your income: ";  cin >> income;
+    if (nameExists[name] == 1) 
+    {
+       cout << "Name already exists.Try Again.\n";
+        return;
+    }
+    nameExists[name] = 1;
+    cout << "Please Enter Your income: ";  
+    cin >> income;
+    if (income <= 0) 
+    {
+        cout << "Invalid balance is entered.\n";
+        return;
+    }
     Wallet* tmp = new Wallet(name, income);
     wallets.push_back(*tmp);
     delete tmp;
@@ -71,6 +85,7 @@ void deleteWallet()
     int ret = callWallet();
     if (ret != -1)
     {
+        nameExists[wallets[ret].getName()]=0;
         wallets.erase(wallets.begin() + ret);
         cout << "\n\nYou have succesfully deleted the wallet.\n\n";
     }
@@ -80,7 +95,7 @@ int callWallet()        // takes wallet choice from user.
 {
     if (wallets.empty())
     {
-        cout << "\nThere is not any existing wallets! \n\n";
+        cout << "\nThere are no existing wallets! \n\n";
         return -1;
     }
     cout << "Please choose the number of the wallet you want, or 0 to go back. \nThese are the existing wallets: \n\n";

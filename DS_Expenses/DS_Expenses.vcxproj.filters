@@ -21,14 +21,23 @@
     <ClCompile Include="Wallet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SavingFiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wallet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SavingFiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Objects_saver.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Expenses_Saver.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

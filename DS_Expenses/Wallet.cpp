@@ -4,7 +4,10 @@
 
 using namespace std;
 
+Wallet::Wallet(void)
+{
 
+}
 Wallet::Wallet(string name, double income)  
 {
     walletName = name;
@@ -184,13 +187,21 @@ void Wallet::FilterByDate()
     }
     double total=0;
     cout << "\nIn " << date.Day << '/' << date.Month << " These are your expenses:\n\n";
+    
     for (int i = 0; i < Expenses.size(); i++)
         if (Expenses[i].date.Day == date.Day && Expenses[i].date.Month == date.Month)
         {
             total += Expenses[i].amount;
             cout << "You have spent " << Expenses[i].amount << " on " << categories[Expenses[i].cat_id] << endl;
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+       
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
@@ -219,7 +230,13 @@ void Wallet::FilterByCat()
             total += Expenses[i].amount;
             cout << "You have spent " << Expenses[i].amount  << " in " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << endl;
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
@@ -247,7 +264,13 @@ void Wallet::FilterByAmount()
             cout << "In " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << " and on "
                 << categories[Expenses[i].cat_id] << "\n\n";
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
@@ -295,7 +318,13 @@ void Wallet::FilterByDateAndCategory()
             total += Expenses[i].amount;
             cout << "You have spent " << Expenses[i].amount << endl;
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
@@ -341,7 +370,13 @@ void Wallet::FilterByDateAndAmount()
             total += Expenses[i].amount;
             cout << "You have spent " << Expenses[i].amount << " on " << categories[Expenses[i].cat_id] << endl;
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
@@ -380,7 +415,13 @@ void Wallet::FilterByCategoryAndAmount()
             total += Expenses[i].amount;
             cout << "You have spent " << Expenses[i].amount << "In " << Expenses[i].date.Day << '/' << Expenses[i].date.Month << endl;
         }
-    cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    if (total == 0)
+    {
+        cout << "You didn't Add any expenses yet.\n";
+    }
+    else {
+        cout << "\nIn total, your expenses cost " << total << ".\n\n";
+    }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
 }

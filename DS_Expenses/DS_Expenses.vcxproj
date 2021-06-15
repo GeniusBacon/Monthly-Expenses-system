@@ -140,12 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DS_Expenses.cpp" />
+    <ClCompile Include="SavingFiles.cpp" />
     <ClCompile Include="Wallet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SavingFiles.h" />
     <ClInclude Include="Wallet.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Expenses_Saver.txt" />
     <Text Include="Objects_saver.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

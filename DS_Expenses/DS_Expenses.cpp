@@ -3,20 +3,22 @@
 #include <string>
 #include <stdio.h>
 #include "Wallet.h"
-
+#include "SavingFiles.h"
 using namespace std;
 
 void displayMainMenu();
 void createWallet();
 void deleteWallet();
 int callWallet();
-
+void Send_Wallets_To_File();
+void Read_From_Files();
 vector <Wallet> wallets;
 map<string,bool>nameExists;
-
+SavingFiles File_Stream;
 
 int main()
 {
+    Read_From_Files();
     cout << "\t\t\t\t\t\t\t" << "Welcome To" << "\n\t\t\t\t\t\t" << "Monthly Expenses Manager\n";
     displayMainMenu();  // main menu that is on loop until the user terminates the program.
     return 0;
@@ -45,6 +47,7 @@ void displayMainMenu()
         deleteWallet();
     else if (Choice == 4)
     {
+        Send_Wallets_To_File();
         cout << "\n\n\t\t\t\t\t\t Goodbye :)  \n \n \n ";
         return;
     }
@@ -116,4 +119,13 @@ int callWallet()        // takes wallet choice from user.
         return -1;
     }
     return Walletchoice;
+}
+void Send_Wallets_To_File()
+{   
+    File_Stream.add_Wallet_to_file(wallets);
+}
+void Read_From_Files()
+{
+    File_Stream.read_Wallets_from_Files(wallets);
+
 }

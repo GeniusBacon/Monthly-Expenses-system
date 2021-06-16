@@ -8,8 +8,6 @@ class SavingFiles
 {
 
 public:
-
-	
 	void add_Wallet_to_file(vector<Wallet>);
 	void add_Expense_to_file(vector<Expense>);
 	void read_Expense_from_File(vector<Expense>&,string);

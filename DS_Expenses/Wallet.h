@@ -27,39 +27,29 @@ class Wallet
 
 public:    // should be private and use getters
 	string categories[9] = {"Food","Education","Transportation","Clothes","Health","Family","Debts","Education","others"};
-	double Balance;
-	string  walletName;
-	double totalspent;
-	vector<Expense>  Expenses;	// getter .. ?
+	double Balance, totalspent, Debt;
+	string  walletName, walletType;
+	vector<Expense>  Expenses;	
 	
 	
 
 public:
-	Wallet(string, double);
 	Wallet(void);
+	Wallet(string, string, double, double);
 	string getName();
-	/*double getBalance();
-	double getTotalspent();
-	string getCatName(int c);
-	double getCatspent(int c);
-	double getDayspent(int m, int d);
-	double getDayCatspent(int m, int d, int c);
-	
-	void setBalance(double par);
-	void setName(string par);
-	void setTotalspent(double par);
-	void setCatspent(int c, double par);
-	void setDayspent(int m, int d, double par);
-	void setDayCatspent(int m, int d, int c, double par);*/
+	string getType();
+	double getBalance();
 
 	void displayWalletMenu();
 	void addExpense();
 	void editWallet();
 	void viewWallet();
+	void NoFilter();
 	void FilterByDate();
 	void FilterByCat();
 	void FilterByAmount();
 	void FilterByDateAndCategory();
 	void FilterByDateAndAmount();
 	void FilterByCategoryAndAmount();
+	void FilterByDateAndAmountandCategory();
 };

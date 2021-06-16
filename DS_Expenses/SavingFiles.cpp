@@ -15,7 +15,7 @@ void SavingFiles::add_Wallet_to_file(vector<Wallet> wallets_vector)
 	for (int i = 0; i < wallets_vector.size(); i++)
 	{
 		Wallet e= wallets_vector.at(i);
-	file_object << e.walletName << endl << e.Balance << endl << e.totalspent << endl;
+		file_object << e.walletName << endl << e.Balance << endl << e.totalspent << endl << e.walletType << endl << e.Debt << endl;
 	int loopsize = e.Expenses.size();
 
 	     for (int j = 0; j <loopsize; j++)
@@ -65,14 +65,12 @@ void SavingFiles::add_Expense_to_file(vector<Expense> to_files_Expense)
 		return;
 
 	}
-	while (file_obj >> File_Wallet.walletName >> File_Wallet.Balance >> File_Wallet.totalspent)
+	while (file_obj >> File_Wallet.walletName >> File_Wallet.Balance >> File_Wallet.totalspent >> File_Wallet.walletType >> File_Wallet.Debt)
 	{
 
 		read_Expense_from_File(File_Wallet.Expenses,File_Wallet.walletName);
 		Read_Wallets.push_back(File_Wallet);
 		File_Wallet.Expenses.clear();
-		
-		
 	}
 	
 

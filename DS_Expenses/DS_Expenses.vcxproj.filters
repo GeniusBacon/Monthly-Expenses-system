@@ -41,4 +41,12 @@
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Complete_DB.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Complete_DB2.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

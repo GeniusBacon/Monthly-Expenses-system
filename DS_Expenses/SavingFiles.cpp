@@ -9,26 +9,29 @@ void SavingFiles::add_Wallet_to_file(vector<Wallet> wallets_vector)
 {
 	int flag = 0;
 	ofstream file_object;
+	ofstream csv_object;
 	vector<Expense>ExpensesCollector;
 	file_object.open("Objects_saver.txt", ios::out);
-
+	csv_object.open("Complete_DB.csv", ios::out);
 	for (int i = 0; i < wallets_vector.size(); i++)
 	{
 		Wallet e= wallets_vector.at(i);
 		file_object << e.walletName << endl << e.Balance << endl << e.totalspent << endl << e.walletType << endl << e.Debt << endl;
+		csv_object<< e.walletName << "," << e.Balance <<  "," <<e.totalspent<< "," << e.walletType <<"," << e.Debt<<endl;
 	int loopsize = e.Expenses.size();
 
 	     for (int j = 0; j <loopsize; j++)
  	       {
 			 ExpensesCollector.push_back(e.Expenses.at(j));
 		   }
-	if (flag < wallets_vector.size()- 1)
-		file_object << endl;
+		if (flag < wallets_vector.size()- 1)
+			file_object << endl;
 
-	flag++;
+		flag++;
 	}
 	add_Expense_to_file(ExpensesCollector);          //Wallet is deleted, But expenses isn't.+out of range mem location exception(solved).
 	file_object.close();
+	csv_object.close();
 	
 }
 
@@ -38,11 +41,14 @@ void SavingFiles::add_Expense_to_file(vector<Expense> to_files_Expense)
 
 	int flag = 0;
 	ofstream file_object;
+	ofstream csv_object;
 	file_object.open("Expenses_Saver.txt", ios::out);
+	csv_object.open("Complete_DB2.csv", ios::out);
 	for (int i = 0; i < to_files_Expense.size(); i++)
 	{
 		Expense e = to_files_Expense.at(i);
 		file_object << e.amount << endl << e.cat_id << endl << e.date.Day << endl <<e.date.Month << endl << e.walletName << endl;
+		csv_object << e.amount << "," << e.cat_id << "," << e.date.Day << "," << e.date.Month << "," << e.walletName<<endl;
 		if (flag < to_files_Expense.size() - 1)
 			file_object << endl;
 

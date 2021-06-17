@@ -151,6 +151,10 @@
     <Text Include="Expenses_Saver.txt" />
     <Text Include="Objects_saver.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Complete_DB.csv" />
+    <None Include="Complete_DB2.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

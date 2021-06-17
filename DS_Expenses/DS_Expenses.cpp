@@ -113,7 +113,7 @@ void deleteWallet()
     int ret = callWallet();
     if (ret != -1)
     {
-        nameExists[wallets[ret].getName()]=0;
+        nameExists[wallets[ret].walletName]=0;
         wallets.erase(wallets.begin() + ret);
         cout << "\n\nYou have succesfully deleted the wallet.\n\n";
     }
@@ -127,16 +127,28 @@ void multipleWallet()
         return ;
     }
     for (int index = 0; index < wallets.size(); index++)
-        cout << index + 1 << ". " << wallets[index].getName() << "\t" << wallets[index].getType() << "\n\n";
+        cout << index + 1 << ". " << wallets[index].walletName << "\t" << wallets[index].walletType << "\n\n";
     cout << "\nHow many wallets do you want to display? ";
     int n;
     cin >> n;
+    if (n > wallets.size())
+    {
+        cout << "Wrong Input, The number you wrote may exceede the existing wallets size"<<endl;
+        
+        multipleWallet();
+    }
     map<int, bool> view;
+    system("CLS");
     for (int i = 0; i < n; i++)
     {
         int num;
         cout << "Enter the number of wallet number " << i + 1 << ": ";
         cin >> num;
+        if (num > wallets.size() || num <1)
+        {
+            cout << "Wrong Input,Please write the correct wallet number"<<endl;
+            multipleWallet();
+        }
         view[num - 1] = 1;
         cout << endl;
     }
@@ -145,7 +157,7 @@ void multipleWallet()
     {
         if (view[i] == 1)
         {
-            cout << "From " << wallets[i].getName() << "\t" << wallets[i].getType() << ":\n";
+            cout << "From " << wallets[i].walletName << "\t" << wallets[i].walletType << ":\n";
             wallets[i].NoFilter();
         }
     }
@@ -160,7 +172,7 @@ void remainingMoney()
         return ;
     }
     for (int i = 0; i < wallets.size(); i++)
-        cout << "The remaining money for " << wallets[i].getName() << " / " << wallets[i].getType() << " is " << wallets[i].getBalance() << endl;
+        cout << "The remaining money for " << wallets[i].walletName << " / " << wallets[i].walletType << " is " << wallets[i].Balance << endl;
     cout << endl;
     return;
 }
@@ -174,7 +186,7 @@ int callWallet()        // takes wallet choice from user.
     }
     cout << "Please choose the number of the wallet you want, or 0 to go back. \nThese are the existing wallets: \n\n";
     for (int index = 0; index < wallets.size(); index++)
-        cout << index + 1 << ". " << wallets[index].getName() << "          " << wallets[index].getType() << "\n\n";
+        cout << index + 1 << ". " << wallets[index].walletName << "          " << wallets[index].walletType << "\n\n";
     cout << "\nYour choice: ";
     int Walletchoice;
     cin >> Walletchoice;

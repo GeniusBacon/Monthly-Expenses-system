@@ -25,7 +25,7 @@ struct Expense
 class Wallet
 {
 
-public:    // should be private and use getters
+public: // should be private and use getters
 	string categories[9] = {"Food","Education","Transportation","Clothes","Health","Family","Debts","Education","others"};
 	double Balance, totalspent, Debt;
 	string  walletName, walletType;
@@ -36,10 +36,6 @@ public:    // should be private and use getters
 public:
 	Wallet(void);
 	Wallet(string, string, double, double);
-	string getName();
-	string getType();
-	double getBalance();
-
 	void displayWalletMenu();
 	void addExpense();
 	void editWallet();

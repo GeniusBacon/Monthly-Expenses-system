@@ -94,6 +94,7 @@ void Wallet::addExpense()
         if (categChoice == 7)
         {
             Debt -= spent;
+            if (Debt < 0) Debt = 0;
             cout << "\nYour remaining debts are " << Debt << "\nYou need to save about " << ((Debt / Balance) * 100) << "% from your balance to pay all your debts.\n";
             cout << "\nType anything to continue.\n\n";
             string c; cin >> c;
@@ -200,6 +201,7 @@ void Wallet::viewWallet()       // function is on repeat until user returns to w
 
 void Wallet::NoFilter()
 {
+    system("CLS");
     double total = 0;
     cout << " These are your expenses:\n\n";
     for (int i = 0; i < Expenses.size(); i++)
@@ -209,13 +211,14 @@ void Wallet::NoFilter()
     }
     if (total == 0)
     {
-        cout << "You didn't Add any expenses yet.\n";
+        cout << "You haven't Added any expenses yet.\n";
     }
     else {
         cout << "\nIn total, your expenses cost " << total << ".\n\n";
     }
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
+    system("CLS");
     return;
 }
 
@@ -544,19 +547,4 @@ void Wallet::FilterByDateAndAmountandCategory()
     cout << "\nType anything to continue.\n\n";
     string c; cin >> c;
     return;
-}
-
-string Wallet::getName()
-{
-    return walletName;
-}
-
-string Wallet::getType()
-{
-    return walletType;
-}
-
-double Wallet::getBalance()
-{
-    return Balance;
 }

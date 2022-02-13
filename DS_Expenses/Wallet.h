@@ -6,7 +6,7 @@
 
 using namespace std;
 
-
+//struct
 struct Date
 {
 	int Day;
@@ -37,7 +37,7 @@ public:
 	Wallet(void);
 	Wallet(string, string, double, double);
 	void displayWalletMenu();
-	void addExpense_marozoz();
+	void add1Expense();
 	void editWallet();
 	void viewWallet();
 	void NoFilter();

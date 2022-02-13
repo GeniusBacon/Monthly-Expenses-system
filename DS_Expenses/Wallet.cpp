@@ -17,7 +17,7 @@ Wallet::Wallet(string name, string type, double income, double debt)
     Debt = debt;
     totalspent = 0;
 }
-
+// omar ezz :D
 
 void Wallet::displayWalletMenu()
 {
@@ -28,7 +28,7 @@ void Wallet::displayWalletMenu()
     cin >> Choice;
     cout << endl;
     if (Choice == 1)
-        addExpense_marozoz();
+        add1Expense();
     else if (Choice == 2)
     {
         editWallet();
@@ -48,7 +48,7 @@ void Wallet::displayWalletMenu()
     displayWalletMenu();
 }
 
-void Wallet::addExpense_marozoz()
+void Wallet::addExpense()
 {
     system("CLS");
     cout << "How much did you spend? ";

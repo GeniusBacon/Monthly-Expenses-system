@@ -37,7 +37,7 @@ public:
 	Wallet(void);
 	Wallet(string, string, double, double);
 	void displayWalletMenu();
-	void addExpense();
+	void add1Expense();
 	void editWallet();
 	void viewWallet();
 	void NoFilter();

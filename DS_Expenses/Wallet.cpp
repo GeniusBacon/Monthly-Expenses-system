@@ -48,7 +48,7 @@ void Wallet::displayWalletMenu()
     displayWalletMenu();
 }
 
-void Wallet::addExpense()
+void Wallet::add1Expense()
 {
     system("CLS");
     cout << "How much did you spend? ";
@@ -58,7 +58,7 @@ void Wallet::addExpense()
     if (spent <= Balance)
     {
         cout << "Choose the category in which you spent your money, or 0 to go back & cancel expense.\nThe existing categories: \n\n";
-        for (int i = 0; i < 9; i++)
+        for (int i = 0 ; i < 9; i++)
             cout << i + 1 << ". " << categories[i] << endl;
         cout << "\nYour choice: ";
         int categChoice;

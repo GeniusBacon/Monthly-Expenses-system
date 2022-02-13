@@ -6,7 +6,7 @@ using namespace std;
 
 Wallet::Wallet(void)
 {
-
+    int weeeeeee;
 }
 
 Wallet::Wallet(string name, string type, double income, double debt)

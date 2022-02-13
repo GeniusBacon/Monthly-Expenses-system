@@ -6,8 +6,7 @@
 
 using namespace std;
 
-//hhhhhhhhhh
-//rrrrerere
+//struct
 struct Date
 {
 	int Day;

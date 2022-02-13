@@ -17,7 +17,7 @@ Wallet::Wallet(string name, string type, double income, double debt)
     Debt = debt;
     totalspent = 0;
 }
-
+// omar ezz :D
 
 void Wallet::displayWalletMenu()
 {

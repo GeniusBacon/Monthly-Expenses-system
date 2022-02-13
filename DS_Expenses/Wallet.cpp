@@ -28,7 +28,7 @@ void Wallet::displayWalletMenu()
     cin >> Choice;
     cout << endl;
     if (Choice == 1)
-        addExpense();
+        addExpense_marozoz();
     else if (Choice == 2)
     {
         editWallet();
@@ -48,7 +48,7 @@ void Wallet::displayWalletMenu()
     displayWalletMenu();
 }
 
-void Wallet::addExpense()
+void Wallet::addExpense_marozoz()
 {
     system("CLS");
     cout << "How much did you spend? ";
